@@ -1,6 +1,5 @@
 module ZoomInfo
   class Base
-    include KeyGeneration
     include HTTParty
     base_uri 'partnerapi.zoominfo.com/partnerapi/'
     format :xml
@@ -12,9 +11,11 @@ module ZoomInfo
       self.class.default_params({pc: partner_name, outputType: 'xml'})
     end
 
-    def prepare_request(query)
-      key = generate_key(query.values, @api_key)
-      query.merge!(key: key)
+    def generate_key(search_terms, password)
+      search_term_prefaces = search_terms.collect{|t| t[0..1]}.join()
+      date_formatted = Time.now.strftime("%-d%-m%-Y")
+
+      return Digest::MD5.hexdigest(search_term_prefaces + password + date_formatted)
     end
   end
 

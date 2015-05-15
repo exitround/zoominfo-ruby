@@ -1,12 +1,15 @@
 module ZoomInfo
   class Person < ZoomInfo::Base
+    SEARCH_NON_KEY_PARAMS = %w(pc numMatches echoInput outputFieldOptions matchCompany uniqueInputId)
+    DETAIL_KEY_PARAMS = %w(PersonID EmailAddress)
+
     def search(query = {})
-      query = prepare_request(query)
+      query[:key] = generate_key(query.except(*SEARCH_NON_KEY_PARAMS).values, @api_key)
       self.class.get("/person/search", query: query).parsed_response
     end
 
     def detail(query = {})
-      query = prepare_request(query)
+      query[:key] = generate_key(query.slice(*DETAIL_KEY_PARAMS).values, @api_key)
       self.class.get("/person/detail", query: query).parsed_response
     end
 

@@ -20,7 +20,7 @@ Jeweler::Tasks.new do |gem|
   gem.summary = %Q{API client to ZoomInfo}
   gem.description = %Q{API client to ZoomInfo's 'new API'}
   gem.email = "ianm280@gmail.com"
-  gem.authors = ["Ian Morgan"]
+  gem.authors = ["Ian Morgan", "Val Savvateev"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

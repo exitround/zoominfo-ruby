@@ -1,12 +1,15 @@
 module ZoomInfo
   class Company < ZoomInfo::Base
+    SEARCH_NON_KEY_PARAMS = %w(pc outputType outputFieldOptions rpp page SortBy SortOrder)
+    DETAIL_KEY_PARAMS = %w(CompanyID CompanyDomain)
+
     def search(query = {})
-      query = prepare_request(query)
+      query[:key] = generate_key(query.except(*SEARCH_NON_KEY_PARAMS).values, @api_key)
       self.class.get("/company/search", query: query).parsed_response
     end
 
     def detail(query = {})
-      query = prepare_request(query)
+      query[:key] = generate_key(query.slice(*DETAIL_KEY_PARAMS).values, @api_key)
       self.class.get("/company/detail", query: query).parsed_response
     end
 
