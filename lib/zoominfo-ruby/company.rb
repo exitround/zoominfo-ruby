@@ -10,15 +10,15 @@ module ZoomInfo
 
     def detail(query = {})
       query[:key] = generate_key(query.slice(*DETAIL_KEY_PARAMS).values, @api_key)
-      self.class.get("/company/detail", query: query).parsed_response
+      self.class.get("/company/detail", query: query).parsed_response["CompanyDetailRequest"]
     end
 
     def search_by_company_name(company_name)
       search('CompanyName' => company_name)['CompanySearchRequest']['CompanySearchResults']
     end
 
-    def detail_by_domain_name(domain_name)
-      detail('CompanyDomain' => domain_name)
+    def detail_by_domain_name(domain_name, opts = {})
+      detail({'CompanyDomain' => domain_name}.merge!(opts))
     end
 
     # Runs 2 API calls, first to people search, second to company detail

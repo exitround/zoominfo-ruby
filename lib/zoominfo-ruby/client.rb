@@ -15,7 +15,7 @@ module ZoomInfo
       search_term_prefaces = search_terms.collect{|t| t[0..1]}.join()
       date_formatted = Time.now.strftime("%-d%-m%-Y")
 
-      return Digest::MD5.hexdigest(search_term_prefaces + password + date_formatted)
+      Digest::MD5.hexdigest(search_term_prefaces + password + date_formatted)
     end
   end
 
