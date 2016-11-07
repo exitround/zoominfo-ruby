@@ -1,10 +1,11 @@
 module ZoomInfo
   class Person < ZoomInfo::Base
-    SEARCH_NON_KEY_PARAMS = %w(pc outputType outputFieldOptions rpp page SortBy SortOrder)
+    SEARCH_NON_KEY_PARAMS = %w(pc outputType outputFieldOptions key rpp page SortBy SortOrder)
     DETAIL_KEY_PARAMS = %w(PersonID EmailAddress)
 
     def search(query = {})
-      query[:key] = generate_key(query.except(*SEARCH_NON_KEY_PARAMS).values, @api_key)
+      key_values = query.reject{|k, v| SEARCH_NON_KEY_PARAMS.include?(k.to_s)}.values
+      query[:key] = generate_key(key_values, @api_key)
       self.class.get("/person/search", query: query).parsed_response
     end
 
