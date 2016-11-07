@@ -1,6 +1,6 @@
 module ZoomInfo
   class Person < ZoomInfo::Base
-    SEARCH_NON_KEY_PARAMS = %w(pc numMatches echoInput outputFieldOptions matchCompany uniqueInputId)
+    SEARCH_NON_KEY_PARAMS = %w(pc outputType outputFieldOptions rpp page SortBy SortOrder)
     DETAIL_KEY_PARAMS = %w(PersonID EmailAddress)
 
     def search(query = {})
