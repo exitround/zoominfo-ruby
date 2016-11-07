@@ -5,7 +5,7 @@ module ZoomInfo
     format :xml
     attr_accessor :partner_name, :api_key
 
-    def initialize(partner_name = nil, api_key = nil)
+    def initialize(partner_name = ENV['ZOOMINFO_CLIENT_ID'], api_key = ENV['ZOOMINFO_KEY'])
       @partner_name = partner_name
       @api_key = api_key
       self.class.default_params({pc: partner_name, outputType: 'xml'})
